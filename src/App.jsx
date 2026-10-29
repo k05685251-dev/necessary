@@ -156,6 +156,8 @@ function App() {
   const [sort, setSort] = useState("default");
   const [cart, setCart] = useState([]);
   const [cartOpen, setCartOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [detailQuantity, setDetailQuantity] = useState(1);
   const [notice, setNotice] = useState("");
 
   const categories = useMemo(
@@ -200,17 +202,22 @@ function App() {
     return () => clearTimeout(timer);
   }, [activeSlide]);
 
-  function addToCart(product) {
+  function openProductDetails(product) {
+    setSelectedProduct(product);
+    setDetailQuantity(1);
+  }
+
+  function addToCart(product, quantity = 1) {
     setCart((previous) => {
       const existing = previous.find((item) => item.id === product.id);
       if (existing) {
         return previous.map((item) =>
           item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
+            ? { ...item, quantity: item.quantity + quantity }
             : item
         );
       }
-      return [...previous, { ...product, quantity: 1 }];
+      return [...previous, { ...product, quantity }];
     });
     setNotice(`${product.name} добавлен в корзину`);
     window.setTimeout(() => setNotice(""), 2200);
@@ -301,11 +308,7 @@ function App() {
         </section>
 
         <section className="support-section" id="business">
-          <h2>
-            Поддержка розничных
-            <br />
-            продавцов любого размера
-          </h2>
+          <h2>Оборудование для бизнеса любого размера</h2>
         </section>
 
         <section className="business-section">
@@ -390,7 +393,17 @@ function App() {
             {filteredProducts.length > 0 ? (
               <div className="products-grid">
                 {filteredProducts.map((product) => (
-                  <article className="product-card" key={product.id}>
+                  <article
+                    className="product-card"
+                    key={product.id}
+                    onClick={() => openProductDetails(product)}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter") openProductDetails(product);
+                    }}
+                    tabIndex={0}
+                    role="button"
+                    aria-label={`${product.name} — подробности`}
+                  >
                     <div className="product-visual">
                       {product.tag && <span className="product-tag">{product.tag}</span>}
                       <span className="product-emoji" aria-hidden="true">{product.icon}</span>
@@ -403,7 +416,7 @@ function App() {
                         <strong className="product-price">{money(product.price)}</strong>
                         <button
                           className="add-cart-button"
-                          onClick={() => addToCart(product)}
+                          onClick={(event) => { event.stopPropagation(); addToCart(product); }}
                           aria-label={`Добавить ${product.name} в корзину`}
                         >
                           + В корзину
@@ -615,6 +628,62 @@ function App() {
         </section>
       </main>
 
+      {selectedProduct && (
+        <div
+          className="product-detail-overlay"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) setSelectedProduct(null);
+          }}
+        >
+          <section className="product-detail-modal" role="dialog" aria-modal="true" aria-label="Информация о товаре">
+            <button className="product-detail-close" onClick={() => setSelectedProduct(null)} aria-label="Закрыть">×</button>
+
+            <div className="product-detail-image-side">
+              <span className="product-detail-category">{selectedProduct.category}</span>
+              <div className="product-detail-icon">{selectedProduct.icon}</div>
+              <p>Изображение товара</p>
+            </div>
+
+            <div className="product-detail-info">
+              <span className="product-detail-kicker">ИНФОРМАЦИЯ О ТОВАРЕ</span>
+              <h2>{selectedProduct.name}</h2>
+              <div className="product-detail-rating"><span>★★★★★</span> <small>Оценки пока не добавлены</small></div>
+              <p className="product-detail-description">{selectedProduct.description}</p>
+
+              <div className="product-detail-price-box">
+                <span className="product-detail-price">{money(selectedProduct.price)}</span>
+                <span className="product-detail-price-note">Цена за 1 шт.</span>
+              </div>
+
+              <div className="product-detail-status"><span className="status-dot" /> Доступен для заказа</div>
+              <div className="product-detail-benefits">
+                <div><span>✓</span><div><strong>Выбор количества</strong><small>Укажите, сколько единиц нужно</small></div></div>
+                <div><span>✓</span><div><strong>Удобная корзина</strong><small>Общая сумма обновится автоматически</small></div></div>
+                <div><span>i</span><div><strong>Скидка</strong><small>Если действует скидка, её можно указать в данных товара</small></div></div>
+              </div>
+
+              <div className="product-detail-buy-row">
+                <div className="detail-quantity-control" aria-label="Количество товара">
+                  <button onClick={() => setDetailQuantity((q) => Math.max(1, q - 1))} aria-label="Уменьшить количество">−</button>
+                  <span>{detailQuantity}</span>
+                  <button onClick={() => setDetailQuantity((q) => q + 1)} aria-label="Увеличить количество">+</button>
+                </div>
+                <button
+                  className="product-detail-add"
+                  onClick={() => {
+                    addToCart(selectedProduct, detailQuantity);
+                    setSelectedProduct(null);
+                  }}
+                >
+                  🛒 Добавить в корзину
+                </button>
+              </div>
+              <p className="product-detail-subtotal">Сумма за выбранное количество: <strong>{money(selectedProduct.price * detailQuantity)}</strong></p>
+            </div>
+          </section>
+        </div>
+      )}
+
       {notice && <div className="cart-notice" role="status">{notice}</div>}
 
       {cartOpen && (
@@ -673,3 +742,4 @@ function App() {
 }
 
 export default App;
+
