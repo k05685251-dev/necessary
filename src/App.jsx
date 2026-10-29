@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from "react";
+import Hero3D from "./Hero3D";
 import "./App.css";
 
 const resources = [
@@ -191,8 +192,10 @@ function App() {
       </nav>
 
       <main>
-        {/* HERO */}
+        {/* HERO: 3D NEON YASHIL TO'LQIN */}
         <section className="hero-section" id="why">
+          <Hero3D />
+
           <div className="hero-content">
             <p className="hero-label">POS-СИСТЕМА</p>
 
@@ -206,9 +209,13 @@ function App() {
             </p>
 
             <div className="hero-buttons">
-              <a href="#start" className="hero-button hero-button-black">
+              <a
+                href="#start"
+                className="hero-button hero-button-black"
+              >
                 Начать бесплатно <span>→</span>
               </a>
+
               <a
                 href="#contact"
                 className="hero-button hero-button-outline"
@@ -219,7 +226,9 @@ function App() {
 
             <p className="hero-login">
               У вас уже есть магазин Shopify?{" "}
-              <a href="#login">Войдите, чтобы настроить Shopify POS</a>
+              <a href="#login">
+                Войдите, чтобы настроить Shopify POS
+              </a>
             </p>
           </div>
         </section>
@@ -255,6 +264,7 @@ function App() {
                 alt="Один магазин"
                 className="business-image"
               />
+
               <div className="business-content">
                 <h3>Один магазин</h3>
                 <p>
@@ -270,6 +280,7 @@ function App() {
                 alt="Несколько магазинов"
                 className="business-image"
               />
+
               <div className="business-content">
                 <h3>Несколько магазинов</h3>
                 <p>
@@ -285,6 +296,7 @@ function App() {
                 alt="Продажи на ходу"
                 className="business-image"
               />
+
               <div className="business-content">
                 <h3>На ходу</h3>
                 <p>
@@ -306,6 +318,7 @@ function App() {
               <br />
               всех прочих местах
             </h2>
+
             <p>
               Это возможность продавать лично, подкрепленная возможностью
               продавать онлайн, и всё это на лучшей в мире торговой платформе.
@@ -355,6 +368,7 @@ function App() {
               src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=600&q=85"
               alt="Магазин Shopify"
             />
+
             <div>
               <h3>Взгляните изнутри на Точку продажи Shopify</h3>
               <p>
@@ -435,6 +449,7 @@ function App() {
             <span className="eyebrow">
               POS-ОБОРУДОВАНИЕ ДЛЯ РОЗНИЧНОЙ ТОРГОВЛИ
             </span>
+
             <h2>
               Интегрированное оборудование,
               <br />
@@ -455,6 +470,7 @@ function App() {
                   оборудования, которое сразу готово к использованию.
                 </p>
               </article>
+
               <article>
                 <h3>Продавайте без перерывов</h3>
                 <p>
@@ -462,6 +478,7 @@ function App() {
                   покупок с помощью платформы Shopify.
                 </p>
               </article>
+
               <article>
                 <h3>Настройте свою конфигурацию</h3>
                 <p>
@@ -483,17 +500,21 @@ function App() {
             src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=85"
             alt="Оплата покупки"
           />
+
           <div>
             <span className="eyebrow">SHOPIFY PAYMENTS</span>
+
             <h2>
               Привлекайте 250+
               <br />
               млн новых клиентов
             </h2>
+
             <p>
               Принимайте платежи и управляйте продажами в единой системе,
               упрощая обслуживание покупателей и работу магазина.
             </p>
+
             <a href="#features" className="outline-pill">
               Как это работает
             </a>
@@ -505,6 +526,7 @@ function App() {
           <div className="features-container">
             <span className="eyebrow">ВОЗМОЖНОСТИ POS</span>
             <h2>Все функции. Все в одном месте.</h2>
+
             <p className="section-description">
               Получите инструменты для повседневных операций и управления
               розничным бизнесом.
@@ -530,6 +552,7 @@ function App() {
         <section className="steps-section" id="start">
           <div className="steps-container">
             <h2>Как начать работу с Shopify POS</h2>
+
             <p className="section-description">
               Независимо от того, начинаете ли вы свой путь или уже развиваете
               платформу, мы готовы вам помочь.
@@ -544,6 +567,7 @@ function App() {
                   магазин к работе.
                 </p>
               </article>
+
               <article>
                 <span className="step-number">2</span>
                 <h3>Создайте свой магазин</h3>
@@ -552,6 +576,7 @@ function App() {
                   товаров для продаж.
                 </p>
               </article>
+
               <article>
                 <span className="step-number">3</span>
                 <h3>Настройте все решение</h3>
@@ -563,9 +588,13 @@ function App() {
             </div>
 
             <div className="steps-buttons">
-              <a href="#contact" className="hero-button hero-button-black">
+              <a
+                href="#contact"
+                className="hero-button hero-button-black"
+              >
                 Начать бесплатно
               </a>
+
               <a href="#contact" className="outline-pill">
                 Свяжитесь с нами
               </a>
@@ -580,19 +609,26 @@ function App() {
               src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=900&q=85"
               alt="Команда бизнеса"
             />
+
             <div>
               <h2>
                 Перейдите и
                 <br />
                 сэкономьте $2,400*
               </h2>
+
               <p>
                 Изучите возможности POS-оборудования, инструменты управления
                 и решения для развития своего бизнеса.
               </p>
-              <a href="#contact" className="hero-button hero-button-black">
+
+              <a
+                href="#contact"
+                className="hero-button hero-button-black"
+              >
                 Узнать больше
               </a>
+
               <small>
                 *Условия, доступность предложений и стоимость оборудования
                 зависят от выбранного решения и региона.
@@ -609,6 +645,7 @@ function App() {
               <br />
               розничной торговли
             </h2>
+
             <p className="resources-description">
               Получите доступ к полезным руководствам, учебным материалам
               и рекомендациям для развития розничной торговли.
@@ -618,6 +655,7 @@ function App() {
               {resources.map((resource) => (
                 <article className="resource-card" key={resource.title}>
                   <img src={resource.image} alt={resource.title} />
+
                   <div className="resource-content">
                     <h3>{resource.title}</h3>
                     <p>{resource.description}</p>
@@ -628,7 +666,10 @@ function App() {
             </div>
 
             <div className="resources-button">
-              <a href="#faq" className="outline-pill outline-pill-light">
+              <a
+                href="#faq"
+                className="outline-pill outline-pill-light"
+              >
                 Посетите блог Shopify Retail
               </a>
             </div>
@@ -674,13 +715,19 @@ function App() {
         <section className="final-cta" id="contact">
           <div className="final-cta-content">
             <h2>Продавайте лучше с Shopify POS</h2>
+
             <p>
               Объедините продажи в магазине и онлайн в одном удобном решении.
             </p>
+
             <div className="final-cta-buttons">
-              <a href="#start" className="hero-button hero-button-light">
+              <a
+                href="#start"
+                className="hero-button hero-button-light"
+              >
                 Начать бесплатно
               </a>
+
               <a
                 href="#contact"
                 className="hero-button hero-button-dark-outline"
