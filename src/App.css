@@ -307,11 +307,13 @@ img {
 
 .support-section h2 {
   max-width: 1000px;
-  margin: 0;
+  margin: 0 0 0 -10px;
   font-size: clamp(38px, 4.5vw, 64px);
-  font-weight: 400;
-  line-height: 1.1;
-  letter-spacing: -2.5px;
+  font-weight: 300;
+  font-family: var(--heading);
+  line-height: 1.08;
+  letter-spacing: -2px;
+  text-align: left;
 }
 
 /* BIZNES KARTOCHKALARI */
@@ -382,17 +384,20 @@ img {
   max-width: 850px;
   margin: 0 0 20px;
   font-size: clamp(42px, 5vw, 66px);
-  font-weight: 400;
+  font-weight: 300;
+  font-family: var(--heading);
   line-height: 1.05;
-  letter-spacing: -2.5px;
+  letter-spacing: -2px;
+  text-align: left;
 }
 
 .everything-container p {
-  max-width: 780px;
+  max-width: 740px;
   margin: 0;
   color: #707070;
   font-size: 19px;
   line-height: 1.5;
+  text-align: left;
 }
 
 /* COLLAGE */
@@ -1915,5 +1920,122 @@ img {
   .hero-title {
     font-size: clamp(34px, 9vw, 48px);
     letter-spacing: -1.5px;
+  }
+}
+.hero-section {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hero-3d-container {
+  z-index: -1;
+}
+.hero-section {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hero-3d-container {
+  z-index: -1;
+}
+.hero-section {
+  position: relative;
+  min-height: 650px;
+  overflow: hidden;
+  isolation: isolate;
+}
+/* FALL '26 EDITION BUTTON */
+.fall-edition-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  padding: 12px 18px;
+  min-height: 48px;
+
+  color: #111;
+  background: #fff;
+
+  border: 2px solid #dedee3;
+  border-radius: 50px;
+
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.fall-edition-button:hover {
+  background: #f5f5f7;
+  border-color: #a9a9b1;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.08);
+}
+
+.fall-edition-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 20px;
+  height: 20px;
+
+  color: #6555ed;
+  background: #f0edff;
+  border-radius: 6px;
+
+  font-size: 14px;
+}
+
+/* NAVBAR JOYLASHUVI */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+}
+
+/* TABLET VA TELEFON */
+@media (max-width: 1050px) {
+  .main-nav {
+    gap: 14px;
+  }
+
+  .fall-edition-button {
+    padding: 10px 13px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  .main-nav {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .fall-edition-button {
+    min-height: 42px;
+    padding: 9px 13px;
   }
 }

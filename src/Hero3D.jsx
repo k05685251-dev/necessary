@@ -1,5 +1,5 @@
 
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import "./Hero3D.css";
 
@@ -10,300 +10,243 @@ export default function Hero3D() {
     const container = mountRef.current;
     if (!container) return;
 
-    let disposed = false;
-    let frameId = 0;
-    let renderer;
+    let frameId;
+    let resizeObserver;
 
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color("#020703");
+    scene.background = new THREE.Color("#010704");
 
     const camera = new THREE.PerspectiveCamera(
-      45,
+      48,
       container.clientWidth / container.clientHeight,
       0.1,
       100
     );
 
-    camera.position.set(0, 0.5, 12);
+    camera.position.set(0, 0, 13);
+    camera.lookAt(0, 0, 0);
 
-    try {
-      renderer = new THREE.WebGLRenderer({
-        antialias: true,
-        alpha: false,
-        powerPreference: "low-power",
-      });
-    } catch (error) {
-      console.error("3D renderer ishga tushmadi:", error);
-      return;
-    }
+    const renderer = new THREE.WebGLRenderer({
+      antialias: true,
+      alpha: false,
+    });
 
-    renderer.setPixelRatio(
-      Math.min(window.devicePixelRatio || 1, 1.5)
-    );
-    renderer.setSize(
-      container.clientWidth,
-      container.clientHeight
-    );
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setClearColor("#010704", 1);
     renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.4;
 
     container.appendChild(renderer.domElement);
 
-    // Neon yashil ranglar
-    const colors = [
-      new THREE.Color("#173c0a"),
-      new THREE.Color("#55ff00"),
-      new THREE.Color("#b6ff37"),
-      new THREE.Color("#f0ffb0"),
-    ];
+    // Yashil yorug'liklar
+    scene.add(new THREE.AmbientLight("#0b6637", 1.5));
 
-    // Zarralardan tashkil topgan katta to'lqin
-    const columns = 240;
-    const rows = 100;
-    const total = columns * rows;
+    const greenLight = new THREE.PointLight("#00ff66", 30, 35);
+    greenLight.position.set(0, 1, 4);
+    scene.add(greenLight);
 
-    const positions = new Float32Array(total * 3);
-    const colorArray = new Float32Array(total * 3);
-    const basePositions = new Float32Array(total * 3);
-    const phases = new Float32Array(total);
+    const emeraldLight = new THREE.PointLight("#00b84d", 25, 30);
+    emeraldLight.position.set(-4, -2, 1);
+    scene.add(emeraldLight);
 
-    for (let row = 0; row < rows; row++) {
-      for (let col = 0; col < columns; col++) {
-        const i = row * columns + col;
-        const index = i * 3;
+    const particleCount = 12000;
+    const positions = new Float32Array(particleCount * 3);
+    const colors = new Float32Array(particleCount * 3);
 
-        const x = (col / (columns - 1) - 0.5) * 17;
-        const depth = row / (rows - 1);
-        const z = (depth - 0.5) * 5;
+    const particleData = [];
 
-        basePositions[index] = x;
-        basePositions[index + 1] = 0;
-        basePositions[index + 2] = z;
+    const innerColor = new THREE.Color("#c2ffb0");
+    const middleColor = new THREE.Color("#00ff59");
+    const outerColor = new THREE.Color("#005b29");
 
-        positions[index] = x;
-        positions[index + 1] = 0;
-        positions[index + 2] = z;
+    // Kattaroq va zichroq zarrali girdob
+    for (let i = 0; i < particleCount; i++) {
+      const radius = Math.pow(Math.random(), 0.72) * 7.5;
+      const angle = Math.random() * Math.PI * 2;
+      const depth = (Math.random() - 0.5) * 1.5;
 
-        phases[i] = Math.random() * Math.PI * 2;
+      particleData.push({
+        radius,
+        angle,
+        depth,
+        speed: 0.12 + Math.random() * 0.25,
+        phase: Math.random() * Math.PI * 2,
+        size: Math.random(),
+      });
 
-        const c = colors[0];
-        colorArray[index] = c.r;
-        colorArray[index + 1] = c.g;
-        colorArray[index + 2] = c.b;
-      }
+      const mix = Math.min(radius / 7.5, 1);
+      const color = innerColor.clone().lerp(middleColor, mix);
+      color.lerp(outerColor, Math.max(0, mix - 0.5) * 0.7);
+
+      colors[i * 3] = color.r;
+      colors[i * 3 + 1] = color.g;
+      colors[i * 3 + 2] = color.b;
     }
 
-    const geometry = new THREE.BufferGeometry();
+    const particleGeometry = new THREE.BufferGeometry();
 
-    geometry.setAttribute(
+    particleGeometry.setAttribute(
       "position",
       new THREE.BufferAttribute(positions, 3)
     );
 
-    geometry.setAttribute(
+    particleGeometry.setAttribute(
       "color",
-      new THREE.BufferAttribute(colorArray, 3)
+      new THREE.BufferAttribute(colors, 3)
     );
 
-    const material = new THREE.PointsMaterial({
-      size: 0.045,
+    const particleMaterial = new THREE.PointsMaterial({
+      size: 0.035,
       vertexColors: true,
       transparent: true,
-      opacity: 0.95,
-      depthWrite: false,
+      opacity: 0.9,
       blending: THREE.AdditiveBlending,
+      depthWrite: false,
       sizeAttenuation: true,
     });
 
-    const wave = new THREE.Points(geometry, material);
-    scene.add(wave);
+    const particles = new THREE.Points(
+      particleGeometry,
+      particleMaterial
+    );
 
-    // Pastki qismda qo'shimcha ingichka to'lqin
-    const linePoints = [];
-    const lineCount = 700;
+    const vortex = new THREE.Group();
+    vortex.add(particles);
+    scene.add(vortex);
 
-    for (let i = 0; i < lineCount; i++) {
-      linePoints.push(new THREE.Vector3(0, 0, 0));
+    // Ko'p qatlamli spiral chiziqlar
+    const spiralLines = [];
+    const spiralMaterials = [];
+
+    for (let s = 0; s < 18; s++) {
+      const points = [];
+      const steps = 350;
+      const turns = 4;
+      const offset = (s / 18) * Math.PI * 2;
+
+      for (let j = 0; j <= steps; j++) {
+        const t = j / steps;
+        const radius = 0.25 + t * 7.1;
+        const angle = t * turns * Math.PI * 2 + offset;
+
+        points.push(
+          new THREE.Vector3(
+            Math.cos(angle) * radius,
+            Math.sin(angle) * radius * 0.62,
+            Math.sin(t * 10 + s) * 0.18
+          )
+        );
+      }
+
+      const geometry = new THREE.BufferGeometry().setFromPoints(points);
+
+      const material = new THREE.LineBasicMaterial({
+        color: s % 3 === 0 ? "#78ff98" : "#00b941",
+        transparent: true,
+        opacity: s % 3 === 0 ? 0.4 : 0.13,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+      });
+
+      const line = new THREE.Line(geometry, material);
+
+      spiralLines.push(line);
+      spiralMaterials.push(material);
+      vortex.add(line);
     }
 
-    const lineGeometry = new THREE.BufferGeometry();
-    lineGeometry.setFromPoints(linePoints);
+    // Markazdagi qoramtir bo'shliq
+    const coreGeometry = new THREE.CircleGeometry(0.42, 64);
 
-    const lineMaterial = new THREE.LineBasicMaterial({
-      color: "#7cff19",
-      transparent: true,
-      opacity: 0.22,
-      blending: THREE.AdditiveBlending,
+    const coreMaterial = new THREE.MeshBasicMaterial({
+      color: "#010704",
+      side: THREE.DoubleSide,
     });
 
-    const line = new THREE.Line(lineGeometry, lineMaterial);
-    scene.add(line);
-
-    // Yengil tuman va yorug'lik hissi
-    const ambient = new THREE.AmbientLight("#8aff45", 0.6);
-    scene.add(ambient);
-
-    const glow = new THREE.PointLight("#65ff13", 5, 18);
-    glow.position.set(0, 2, 4);
-    scene.add(glow);
-
-    let mouseX = 0;
-    let mouseY = 0;
-    let targetX = 0;
-    let targetY = 0;
-
-    const onPointerMove = (event) => {
-      const rect = container.getBoundingClientRect();
-
-      targetX =
-        ((event.clientX - rect.left) / rect.width - 0.5) * 2;
-
-      targetY =
-        ((event.clientY - rect.top) / rect.height - 0.5) * 2;
-    };
-
-    const resizeObserver = new ResizeObserver(() => {
-      if (disposed || !container.clientWidth ||
-          !container.clientHeight) return;
-
-      camera.aspect =
-        container.clientWidth / container.clientHeight;
-
-      camera.updateProjectionMatrix();
-
-      renderer.setSize(
-        container.clientWidth,
-        container.clientHeight
-      );
-    });
-
-    resizeObserver.observe(container);
-    container.addEventListener("pointermove", onPointerMove);
+    const core = new THREE.Mesh(coreGeometry, coreMaterial);
+    core.position.z = 0.4;
+    vortex.add(core);
 
     const clock = new THREE.Clock();
 
     function animate() {
-      if (disposed) return;
-
       frameId = requestAnimationFrame(animate);
 
-      const t = clock.getElapsedTime();
+      const time = clock.getElapsedTime();
+      const array = particleGeometry.attributes.position.array;
 
-      mouseX += (targetX - mouseX) * 0.025;
-      mouseY += (targetY - mouseY) * 0.025;
+      for (let i = 0; i < particleCount; i++) {
+        const p = particleData[i];
 
-      const pos = geometry.attributes.position.array;
-      const col = geometry.attributes.color.array;
+        const angle =
+          p.angle + time * p.speed + p.radius * 0.28;
 
-      for (let row = 0; row < rows; row++) {
-        for (let column = 0; column < columns; column++) {
-          const i = row * columns + column;
-          const index = i * 3;
+        const radius =
+          p.radius + Math.sin(time * 1.1 + p.phase) * 0.08;
 
-          const x = basePositions[index];
-          const z = basePositions[index + 2];
+        const perspective =
+          0.62 + (p.radius / 7.5) * 0.38;
 
-          const depth = row / (rows - 1);
+        array[i * 3] = Math.cos(angle) * radius;
 
-          // To'lqinning ikki xil harakati
-          const mainWave =
-            Math.sin(x * 0.72 - t * 1.15 + z * 0.45) *
-            0.65;
+        array[i * 3 + 1] =
+          Math.sin(angle) * radius * perspective;
 
-          const secondaryWave =
-            Math.sin(x * 1.15 + t * 0.65 + z * 0.8) *
-            0.19;
-
-          const peak =
-            Math.exp(-Math.pow((x - 2.8) / 2.2, 2)) * 0.55;
-
-          const y =
-            mainWave +
-            secondaryWave +
-            peak * Math.sin(t * 0.8 + z);
-
-          // Zarralarning balandligi va chuqurligiga qarab rang
-          pos[index + 1] = y + mouseY * 0.08;
-
-          const intensity = THREE.MathUtils.clamp(
-            0.35 +
-              Math.abs(y) * 0.38 +
-              Math.sin(t * 1.5 + phases[i]) * 0.08,
-            0,
-            1
-          );
-
-          const color = colors[
-            intensity > 0.82 ? 3 :
-            intensity > 0.62 ? 2 :
-            intensity > 0.4 ? 1 : 0
-          ];
-
-          // Uzoq qatlamlar xira ko'rinadi
-          const fade = 0.35 + (1 - depth) * 0.65;
-
-          col[index] = color.r * fade;
-          col[index + 1] = color.g * fade;
-          col[index + 2] = color.b * fade;
-        }
+        array[i * 3 + 2] =
+          p.depth + Math.sin(angle * 1.5) * 0.12;
       }
 
-      geometry.attributes.position.needsUpdate = true;
-      geometry.attributes.color.needsUpdate = true;
+      particleGeometry.attributes.position.needsUpdate = true;
 
-      // Ingichka yorug'lik chizig'i ham to'lqin bilan harakatlanadi
-      const lineArray = lineGeometry.attributes.position.array;
+      // Butun girdob sekin aylanadi
+      vortex.rotation.z = time * 0.055;
+      vortex.rotation.x = Math.sin(time * 0.2) * 0.035;
+      vortex.rotation.y = Math.sin(time * 0.15) * 0.04;
 
-      for (let i = 0; i < lineCount; i++) {
-        const x = (i / (lineCount - 1) - 0.5) * 17;
-
-        lineArray[i * 3] = x;
-        lineArray[i * 3 + 1] =
-          Math.sin(x * 0.72 - t * 1.15) * 0.65 +
-          Math.sin(x * 1.15 + t * 0.65) * 0.19;
-        lineArray[i * 3 + 2] = 0.08;
-      }
-
-      lineGeometry.attributes.position.needsUpdate = true;
-
-      wave.rotation.y = mouseX * 0.035;
-      camera.position.x = mouseX * 0.18;
-      camera.position.y = 0.5 - mouseY * 0.12;
-
-      glow.position.x = mouseX * 2;
-      glow.position.y = 1.5 + Math.sin(t * 0.7) * 0.4;
-
-      camera.lookAt(0, 0, 0);
+      greenLight.intensity = 25 + Math.sin(time * 1.4) * 5;
 
       renderer.render(scene, camera);
     }
 
     animate();
 
+    const resize = () => {
+      const width = container.clientWidth;
+      const height = container.clientHeight;
+
+      if (!width || !height) return;
+
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(width, height);
+    };
+
+    resizeObserver = new ResizeObserver(resize);
+    resizeObserver.observe(container);
+
     return () => {
-      disposed = true;
       cancelAnimationFrame(frameId);
+      resizeObserver?.disconnect();
 
-      resizeObserver.disconnect();
-      container.removeEventListener("pointermove", onPointerMove);
+      scene.traverse((object) => {
+        if (object.isMesh || object.isLine || object.isPoints) {
+          object.geometry?.dispose();
+        }
+      });
 
-      geometry.dispose();
-      material.dispose();
-      lineGeometry.dispose();
-      lineMaterial.dispose();
+      particleMaterial.dispose();
+      coreMaterial.dispose();
+      spiralMaterials.forEach((material) => material.dispose());
 
       renderer.dispose();
 
-      if (renderer.domElement.parentNode === container) {
+      if (container.contains(renderer.domElement)) {
         container.removeChild(renderer.domElement);
       }
     };
   }, []);
 
-  return (
-    <div
-      ref={mountRef}
-      className="hero-3d-background"
-      aria-hidden="true"
-    />
-  );
+  return <div ref={mountRef} className="hero-3d-container" />;
 }

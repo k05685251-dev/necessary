@@ -165,34 +165,45 @@ function App() {
         </a>
 
         <nav className="main-nav">
-          <a href="#why">Почему Shopify⌄</a>
-          <a href="#products">Продукты⌄</a>
-          <a href="#features">Возможности</a>
-          <a href="#prices">Цены</a>
+          <a href="#why">Why Shopify⌄</a>
+          <a href="#products">Products⌄</a>
+          <a href="#prices">Pricing</a>
           <a href="#enterprise">Enterprise</a>
+
+          {/* FALL '26 EDITION */}
+          <a
+            href="https://www.shopify.com/editions/fall2026"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="fall-edition-button"
+          >
+            <span className="fall-edition-icon">♙</span>
+            Fall '26 Edition
+          </a>
         </nav>
 
         <div className="nav-actions">
           <a href="#login" className="login-link">
-            Войти
+            Log in
           </a>
+
           <a href="#start" className="nav-button">
-            Начать бесплатно
+            Start for free
           </a>
         </div>
       </header>
 
-      {/* IKINCHI NAVBAR */}
+      {/* IKKINCHI NAVBAR */}
       <nav className="second-navbar">
-        <a href="#pos">Точка продажи</a>
-        <a href="#business">Бизнес-размеры</a>
-        <a href="#industry">Отрасли промышленности</a>
-        <a href="#features">Возможности</a>
-        <a href="#prices">Цены на POS</a>
+        <a href="#pos">Point of Sale</a>
+        <a href="#business">Business Sizes⌄</a>
+        <a href="#industry">Industries⌄</a>
+        <a href="#features">Features⌄</a>
+        <a href="#prices">POS Pricing</a>
       </nav>
 
       <main>
-        {/* HERO: 3D NEON YASHIL TO'LQIN */}
+        {/* HERO: 3D ANIMATSIYA */}
         <section className="hero-section" id="why">
           <Hero3D />
 
@@ -240,6 +251,7 @@ function App() {
             <div className="brand-logo parachute">PARACHUTE</div>
             <div className="brand-logo alo">alo</div>
             <div className="brand-logo glossier">Glossier.</div>
+
             <div className="brand-logo gorjana">
               <span className="gorjana-icon">g</span>
               <span>gorjana</span>
@@ -284,8 +296,8 @@ function App() {
               <div className="business-content">
                 <h3>Несколько магазинов</h3>
                 <p>
-                  Оптимизируйте операции с помощью унифицированных данных,
-                  отчетности и управления запасами.
+                  Оптимизируйте операции с помощью унифицированных
+                  данных, отчетности и управления запасами.
                 </p>
               </div>
             </article>
@@ -320,8 +332,9 @@ function App() {
             </h2>
 
             <p>
-              Это возможность продавать лично, подкрепленная возможностью
-              продавать онлайн, и всё это на лучшей в мире торговой платформе.
+              Это возможность продавать лично, подкрепленная
+              возможностью продавать онлайн, и всё это на лучшей
+              в мире торговой платформе.
             </p>
           </div>
         </section>
@@ -370,12 +383,18 @@ function App() {
             />
 
             <div>
-              <h3>Взгляните изнутри на Точку продажи Shopify</h3>
+              <h3>
+                Взгляните изнутри на Точку продажи Shopify
+              </h3>
+
               <p>
                 Узнайте, как розничные продавцы используют современные
                 инструменты для развития бизнеса.
               </p>
-              <a href="#resources">Смотреть демонстрацию ↗</a>
+
+              <a href="#resources">
+                Смотреть демонстрацию ↗
+              </a>
             </div>
           </div>
 
@@ -391,7 +410,6 @@ function App() {
                 Такая, какой она и должна быть.
               </h2>
 
-              {/* SLIDER: RASM VA 3 TA CHIZIQ */}
               <div className="connected-layout">
                 <div className="connected-image">
                   <img
@@ -466,16 +484,16 @@ function App() {
               <article>
                 <h3>Начните как можно быстрее</h3>
                 <p>
-                  Начните продавать в кратчайшие сроки с помощью надежного
-                  оборудования, которое сразу готово к использованию.
+                  Начните продавать в кратчайшие сроки с помощью
+                  надежного оборудования, которое сразу готово к использованию.
                 </p>
               </article>
 
               <article>
                 <h3>Продавайте без перерывов</h3>
                 <p>
-                  Организуйте стабильную работу кассы и удобное оформление
-                  покупок с помощью платформы Shopify.
+                  Организуйте стабильную работу кассы и удобное
+                  оформление покупок с помощью платформы Shopify.
                 </p>
               </article>
 
@@ -525,6 +543,7 @@ function App() {
         <section className="features-section" id="features">
           <div className="features-container">
             <span className="eyebrow">ВОЗМОЖНОСТИ POS</span>
+
             <h2>Все функции. Все в одном месте.</h2>
 
             <p className="section-description">
@@ -554,8 +573,8 @@ function App() {
             <h2>Как начать работу с Shopify POS</h2>
 
             <p className="section-description">
-              Независимо от того, начинаете ли вы свой путь или уже развиваете
-              платформу, мы готовы вам помочь.
+              Независимо от того, начинаете ли вы свой путь или уже
+              развиваете платформу, мы готовы вам помочь.
             </p>
 
             <div className="steps-grid">
@@ -563,8 +582,8 @@ function App() {
                 <span className="step-number">1</span>
                 <h3>Начните бесплатно</h3>
                 <p>
-                  Познакомьтесь с возможностями Shopify и подготовьте свой
-                  магазин к работе.
+                  Познакомьтесь с возможностями Shopify и подготовьте
+                  свой магазин к работе.
                 </p>
               </article>
 
@@ -572,8 +591,8 @@ function App() {
                 <span className="step-number">2</span>
                 <h3>Создайте свой магазин</h3>
                 <p>
-                  Получите помощь в настройке магазина и организуйте каталог
-                  товаров для продаж.
+                  Получите помощь в настройке магазина и организуйте
+                  каталог товаров для продаж.
                 </p>
               </article>
 
@@ -618,8 +637,8 @@ function App() {
               </h2>
 
               <p>
-                Изучите возможности POS-оборудования, инструменты управления
-                и решения для развития своего бизнеса.
+                Изучите возможности POS-оборудования, инструменты
+                управления и решения для развития своего бизнеса.
               </p>
 
               <a
