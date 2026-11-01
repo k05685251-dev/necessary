@@ -146,6 +146,21 @@ const connectedSlides = [
   },
 ];
 
+const equipmentSlides = [
+  {
+    image: "https://images.unsplash.com/photo-1556740758-90de374c12ad?auto=format&fit=crop&w=1800&q=85",
+    title: "Кассовая зона",
+  },
+  {
+    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1800&q=85",
+    title: "Складское оборудование",
+  },
+  {
+    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1800&q=85",
+    title: "Компьютерная техника",
+  },
+];
+
 const money = (value) =>
   new Intl.NumberFormat("ru-RU").format(value) + " сум";
 
@@ -154,8 +169,7 @@ function App() {
   if (window.location.pathname.toLowerCase() === "/oyna") return <Oyna />;
   const [openFaq, setOpenFaq] = useState(null);
   const [activeSlide, setActiveSlide] = useState(0);
-  const [collageSlide, setCollageSlide] = useState(0);
-  const [collagePaused, setCollagePaused] = useState(false);
+  const [equipmentSlide, setEquipmentSlide] = useState(0);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("Все товары");
   const [sort, setSort] = useState("default");
@@ -164,6 +178,14 @@ function App() {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [detailQuantity, setDetailQuantity] = useState(1);
   const [notice, setNotice] = useState("");
+  const [showStickyNav, setShowStickyNav] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setShowStickyNav(window.scrollY > 140);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const categories = useMemo(
     () => ["Все товары", ...new Set(products.map((p) => p.category))],
@@ -207,51 +229,12 @@ function App() {
     return () => clearTimeout(timer);
   }, [activeSlide]);
 
-  const collageSlides = [
-    {
-      left: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=85",
-      center: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=1000&q=85",
-      right: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=85",
-      leftAlt: "Работа с компьютером", centerAlt: "Кассовая система", rightAlt: "Складское оборудование",
-      leftLabel: "Компьютерная техника", centerLabel: "Кассовые системы", rightLabel: "Склад",
-    },
-    {
-      left: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=85",
-      center: "https://images.unsplash.com/photo-1556740758-90de374c12ad?auto=format&fit=crop&w=1000&q=85",
-      right: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=85",
-      leftAlt: "Компьютерная техника", centerAlt: "Работа на кассе", rightAlt: "Склад и логистика",
-      leftLabel: "Техника для бизнеса", centerLabel: "Продажи и расчёты", rightLabel: "Склад и логистика",
-    },
-    {
-      left: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=900&q=85",
-      center: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=1000&q=85",
-      right: "https://images.unsplash.com/photo-1566576721346-d4a3b4eaeb55?auto=format&fit=crop&w=800&q=85",
-      leftAlt: "Магазин", centerAlt: "Кассовая система", rightAlt: "Складская логистика",
-      leftLabel: "Магазин", centerLabel: "Кассовые системы", rightLabel: "Оптовая торговля",
-    },
-  ];
-
   useEffect(() => {
-    if (collagePaused) return undefined;
-    const timer = setInterval(() => {
-      setCollageSlide((previous) => (previous + 1) % collageSlides.length);
-    }, 4500);
-    return () => clearInterval(timer);
-  }, [collagePaused]);
-
-  // Oyna.jsx sahifasidagi "Назад / Все направления бизнеса" tugmasi
-  // asosiy sahifadagi biznes kartochkalari bo‘limiga qaytadi.
-  useEffect(() => {
-    if (window.location.hash === "#industry-showcase") {
-      const timer = setTimeout(() => {
-        document.getElementById("industry-showcase")?.scrollIntoView({
-          behavior: "auto",
-          block: "start",
-        });
-      }, 100);
-      return () => clearTimeout(timer);
-    }
-  }, []);
+    const timer = setTimeout(() => {
+      setEquipmentSlide((previous) => (previous + 1) % connectedSlides.length);
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [equipmentSlide]);
 
   function openProductDetails(product) {
     setSelectedProduct(product);
@@ -319,6 +302,21 @@ function App() {
         <a href="#features">Возможности</a>
         <a href="#resources">Полезные материалы</a>
       </nav>
+
+      {showStickyNav && (
+        <div className="sticky-combined-nav">
+          <a href="#top" className="shopify-logo sticky-shopify-logo" aria-label="Shopify — наверх">
+            <span className="shopify-bag">S</span>
+            <span>shopify</span>
+          </a>
+          <nav className="sticky-nav-links" aria-label="Основная навигация">
+            <a href="#business">Для бизнеса</a>
+            <a href="#features">Возможности</a>
+            <a href="#resources">Полезные материалы</a>
+          </nav>
+          <a href="/katalog" className="sticky-catalog-button">Каталог</a>
+        </div>
+      )}
 
       <main id="top">
         <section className="hero-section" id="why">
@@ -483,42 +481,63 @@ function App() {
           </div>
         </section>
 
-        <section
-          className={`collage-section ${collagePaused ? "is-paused" : ""}`}
-          onMouseEnter={() => setCollagePaused(true)}
-          onMouseLeave={() => setCollagePaused(false)}
-          onFocus={() => setCollagePaused(true)}
-          onBlur={(event) => {
-            if (!event.currentTarget.contains(event.relatedTarget)) setCollagePaused(false);
-          }}
-          aria-label="Рекламная подборка оборудования"
-        >
-          <div className="collage-container">
-            <div className="collage-photo collage-left" key={`left-${collageSlide}`}>
-              <img src={collageSlides[collageSlide].left} alt={collageSlides[collageSlide].leftAlt} />
-              <span className="collage-label">{collageSlides[collageSlide].leftLabel} <b>＋</b></span>
-            </div>
-            <div className="collage-photo collage-center" key={`center-${collageSlide}`}>
-              <img src={collageSlides[collageSlide].center} alt={collageSlides[collageSlide].centerAlt} />
-              <span className="collage-label">{collageSlides[collageSlide].centerLabel} <b>＋</b></span>
-            </div>
-            <div className="collage-photo collage-right" key={`right-${collageSlide}`}>
-              <img src={collageSlides[collageSlide].right} alt={collageSlides[collageSlide].rightAlt} />
-              <span className="collage-label">{collageSlides[collageSlide].rightLabel} <b>＋</b></span>
-            </div>
-          </div>
-          <div className="collage-slide-indicators" aria-label="Слайды">
-            {collageSlides.map((slide, index) => (
-              <button
-                type="button"
-                key={slide.centerLabel + index}
-                className={index === collageSlide ? "active" : ""}
-                aria-label={`Показать слайд ${index + 1}`}
-                onClick={() => setCollageSlide(index)}
-              />
+        <section className="collage-section" aria-label="Категории торгового оборудования">
+          <div className="collage-ten-grid">
+            {[
+              { title: "Кассовые системы", alt: "POS кассовая система", image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=700&q=90" },
+              { title: "Сканеры штрих-кодов", alt: "Сканирование товаров", image: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=700&q=90" },
+              { title: "Принтеры", alt: "Принтер и печать", image: "https://images.unsplash.com/photo-1612815154858-60aa4c59eaa6?auto=format&fit=crop&w=700&q=90" },
+              { title: "Весы", alt: "Торговые весы", image: "https://images.unsplash.com/photo-1578916171728-46686eac8d58?auto=format&fit=crop&w=700&q=90" },
+              { title: "Оплата", alt: "Платёжное устройство", image: "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&w=700&q=90" },
+              { title: "Складское оборудование", alt: "Складское оборудование", image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=700&q=90" },
+              { title: "Комплектующие", alt: "Компьютерные комплектующие", image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=700&q=90" },
+              { title: "Аксессуары", alt: "Компьютерные аксессуары", image: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=700&q=90" },
+              { title: "Торговая мебель", alt: "Оборудование магазина", image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=700&q=90" },
+              { title: "POS-моноблоки", alt: "POS компьютер", image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=700&q=90" },
+            ].map((item, index) => (
+              <article className={`collage-ten-card collage-ten-card-${index + 1}`} key={item.title}>
+                <img src={item.image} alt={item.alt} loading="lazy" />
+                <span className="collage-ten-label">{item.title}<b>＋</b></span>
+              </article>
             ))}
           </div>
         </section>
+
+        {/* Рекламная витрина оборудования: 10 карточек с фотографиями */}
+        <section className="equipment-marquee-section" aria-label="Популярное торговое оборудование">
+          <div className="equipment-marquee-window">
+            <div className="equipment-marquee-track">
+              {[0, 1].map((copy) => (
+                <div className="equipment-marquee-group" key={copy} aria-hidden={copy === 1}>
+                  {[
+                    { title: "Счётчики банкнот", image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=700&q=90", label: "ДЛЯ ПЕРЕСЧЁТА БАНКНОТ", tone: "cash" },
+                    { title: "Электронные весы", image: "https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=700&q=90", label: "ДЛЯ ВЗВЕШИВАНИЯ ТОВАРОВ", tone: "scale" },
+                    { title: "POS-моноблоки", image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=700&q=90", label: "ДЛЯ КАССЫ И УЧЁТА ПРОДАЖ", tone: "pos" },
+                    { title: "Сканеры штрих-кодов", image: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=700&q=90", label: "УСКОРЯЮТ РАБОТУ КАССИРА", tone: "scanner" },
+                    { title: "Принтеры чеков", image: "https://images.unsplash.com/photo-1612815154858-60aa4c59eaa6?auto=format&fit=crop&w=700&q=90", label: "ДЛЯ ПЕЧАТИ ЧЕКОВ", tone: "printer" },
+                    { title: "Платёжные терминалы", image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=700&q=90", label: "ДЛЯ БЫСТРОЙ ОПЛАТЫ", tone: "payment" },
+                    { title: "Кассовые денежные ящики", image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=700&q=90", label: "УДОБНОЕ ХРАНЕНИЕ НАЛИЧНЫХ", tone: "drawer" },
+                    { title: "Терминалы сбора данных", image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=700&q=90", label: "ДЛЯ СКЛАДСКОГО УЧЁТА", tone: "data" },
+                    { title: "Компьютерные мониторы", image: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=700&q=90", label: "ДЛЯ РАБОЧЕГО МЕСТА", tone: "monitor" },
+                    { title: "Принтеры этикеток", image: "https://images.unsplash.com/photo-1612815154858-60aa4c59eaa6?auto=format&fit=crop&w=700&q=90", label: "ДЛЯ ЦЕННИКОВ И ШТРИХКОДОВ", tone: "labels" },
+                  ].map((item) => (
+                    <article className="equipment-marquee-card" key={item.title}>
+                      <h3>{item.title}</h3>
+                      <div className={`equipment-marquee-product equipment-product-${item.tone}`}>
+                        <img src={item.image} alt={item.title} loading="lazy" />
+                      </div>
+                      <div className="equipment-marquee-label">
+                        <span className="equipment-label-square" />
+                        {item.label}
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
 
         <section className="connected-section" id="industry">
           <div className="connected-promo">
@@ -570,7 +589,27 @@ function App() {
           <div className="equipment-container">
             <span className="eyebrow">ТОРГОВОЕ ОБОРУДОВАНИЕ</span>
             <h2>Устройства для кассы, склада и магазина</h2>
-            <img className="equipment-image" src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=1800&q=85" alt="Оборудование для торговли" />
+            <div className="equipment-slider-image" key={equipmentSlide}>
+              <img
+                className="equipment-image"
+                src={equipmentSlides[equipmentSlide].image}
+                alt={equipmentSlides[equipmentSlide].title}
+              />
+            </div>
+            <div className="equipment-slider-progress" aria-label="Прогресс слайдов">
+              {equipmentSlides.map((slide, index) => (
+                <button
+                  key={slide.title}
+                  type="button"
+                  className={`equipment-progress-line ${equipmentSlide === index ? "active" : ""} ${index < equipmentSlide ? "completed" : ""}`}
+                  onClick={() => setEquipmentSlide(index)}
+                  aria-label={`Показать изображение ${index + 1}`}
+                  aria-pressed={equipmentSlide === index}
+                >
+                  <span className={equipmentSlide === index ? "equipment-progress-fill" : ""} />
+                </button>
+              ))}
+            </div>
             <div className="equipment-benefits">
               <article><h3>Для кассовой зоны</h3><p>Компьютеры, сканеры, принтеры чеков и денежные ящики.</p></article>
               <article><h3>Для склада</h3><p>Терминалы сбора данных, этикетки, сканеры и весы.</p></article>
