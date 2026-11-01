@@ -165,8 +165,10 @@ const money = (value) =>
   new Intl.NumberFormat("ru-RU").format(value) + " сум";
 
 function App() {
-  if (window.location.pathname.toLowerCase() === "/katalog") return <Katalog />;
-  if (window.location.pathname.toLowerCase() === "/oyna") return <Oyna />;
+  const currentPath = window.location.pathname.toLowerCase();
+  const currentPage = new URLSearchParams(window.location.search).get("page");
+  if (currentPath === "/katalog" || currentPage === "katalog") return <Katalog />;
+  if (currentPath === "/oyna" || currentPage === "oyna") return <Oyna />;
   const [openFaq, setOpenFaq] = useState(null);
   const [activeSlide, setActiveSlide] = useState(0);
   const [equipmentSlide, setEquipmentSlide] = useState(0);
@@ -292,7 +294,7 @@ function App() {
         </nav>
 
         <div className="nav-actions">
-          <a href="/katalog" className="nav-catalog-button">Каталог</a>
+          <a href="/?page=katalog" className="nav-catalog-button">Каталог</a>
           <a href="#start" className="nav-button">Начать</a>
         </div>
       </header>
@@ -314,7 +316,7 @@ function App() {
             <a href="#features">Возможности</a>
             <a href="#resources">Полезные материалы</a>
           </nav>
-          <a href="/katalog" className="sticky-catalog-button">Каталог</a>
+          <a href="/?page=katalog" className="sticky-catalog-button">Каталог</a>
         </div>
       )}
 
@@ -459,7 +461,7 @@ function App() {
             ].map((industry, index) => (
               <a
                 className="industry-tile"
-                href={`/oyna?industry=${encodeURIComponent(industry.title)}`}
+                href={`/?page=oyna&industry=${encodeURIComponent(industry.title)}`}
                 key={industry.title}
                 style={{ "--industry-image": `url(https://images.unsplash.com/${industry.image}?auto=format&fit=crop&w=700&q=85)` }}
               >
