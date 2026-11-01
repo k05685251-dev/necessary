@@ -1,7 +1,8 @@
 
 import React, { useEffect, useMemo, useState } from "react";
-import Hero3D from "./Hero3D";
 import "./App.css";
+import Katalog from "./Katalog";
+import Oyna from "./Oyna";
 
 const products = [
   { id: 1, name: "POS кассовый компьютер", category: "Кассовые системы", price: 6500000, icon: "🖥️", description: "Компьютер для кассы и торгового зала", tag: "Популярное" },
@@ -149,6 +150,8 @@ const money = (value) =>
   new Intl.NumberFormat("ru-RU").format(value) + " сум";
 
 function App() {
+  if (window.location.pathname.toLowerCase() === "/katalog") return <Katalog />;
+  if (window.location.pathname.toLowerCase() === "/oyna") return <Oyna />;
   const [openFaq, setOpenFaq] = useState(null);
   const [activeSlide, setActiveSlide] = useState(0);
   const [search, setSearch] = useState("");
@@ -246,7 +249,6 @@ function App() {
         <nav className="main-nav">
           <a href="#why">Why Shopify⌄</a>
           <a href="#products">Products⌄</a>
-          <a href="#catalog">Каталог</a>
           <a href="#prices">Pricing</a>
           <a
             href="https://www.shopify.com/editions/fall2026"
@@ -259,15 +261,12 @@ function App() {
         </nav>
 
         <div className="nav-actions">
-          <button className="cart-nav-button" onClick={() => setCartOpen(true)}>
-            🛒 Корзина <span>{cartCount}</span>
-          </button>
+          <a href="/katalog" className="nav-catalog-button">Каталог</a>
           <a href="#start" className="nav-button">Начать</a>
         </div>
       </header>
 
       <nav className="second-navbar">
-        <a href="#catalog">Каталог оборудования</a>
         <a href="#business">Для бизнеса</a>
         <a href="#features">Возможности</a>
         <a href="#resources">Полезные материалы</a>
@@ -275,7 +274,13 @@ function App() {
 
       <main id="top">
         <section className="hero-section" id="why">
-          <Hero3D />
+          <img
+            className="hero-background-image"
+            src="/Современный%20POS-терминал%20в%20магазине.png"
+            alt="Современный POS-терминал в магазине"
+            aria-hidden="true"
+          />
+          <div className="hero-video-overlay" aria-hidden="true" />
           <div className="hero-content">
             <p className="hero-label">POS-СИСТЕМА И ТОРГОВОЕ ОБОРУДОВАНИЕ</p>
             <h1 className="hero-title">Технологии для каждой продажи</h1>
@@ -284,7 +289,7 @@ function App() {
               и компьютерные комплектующие для вашего бизнеса.
             </p>
             <div className="hero-buttons">
-              <a href="#catalog" className="hero-button hero-button-black">
+              <a href="#business" className="hero-button hero-button-black">
                 Смотреть каталог <span>→</span>
               </a>
               <a href="#contact" className="hero-button hero-button-outline">
@@ -297,15 +302,60 @@ function App() {
           </div>
         </section>
 
-        <section className="brands-section">
-          <div className="brands-container">
-            <div className="brand-logo kotn">KOTN</div>
-            <div className="brand-logo parachute">PARACHUTE</div>
-            <div className="brand-logo alo">alo</div>
-            <div className="brand-logo glossier">Glossier.</div>
-            <div className="brand-logo gorjana">◉ gorjana</div>
-          </div>
-        </section>
+
+<section className="brands-section">
+  <div className="brands-marquee">
+    <div className="brands-track">
+      <div className="brands-group">
+        <div className="brand-logo kotn">KOTN</div>
+        <div className="brand-logo parachute">PARACHUTE</div>
+        <div className="brand-logo alo">alo</div>
+        <div className="brand-logo glossier">Glossier.</div>
+        <div className="brand-logo gorjana">◉ gorjana</div>
+        <div className="brand-logo brand-nike">NIKE</div>
+        <div className="brand-logo brand-adidas">adidas</div>
+        <div className="brand-logo brand-puma">PUMA</div>
+        <div className="brand-logo brand-zara">ZARA</div>
+        <div className="brand-logo brand-hm">H&M</div>
+        <div className="brand-logo brand-apple">Apple</div>
+        <div className="brand-logo brand-samsung">SAMSUNG</div>
+        <div className="brand-logo brand-sony">SONY</div>
+        <div className="brand-logo brand-google">Google</div>
+        <div className="brand-logo brand-amazon">amazon</div>
+        <div className="brand-logo brand-ikea">IKEA</div>
+        <div className="brand-logo brand-reebok">Reebok</div>
+        <div className="brand-logo brand-levi">Levi's</div>
+        <div className="brand-logo brand-dior">DIOR</div>
+        <div className="brand-logo brand-prada">PRADA</div>
+      </div>
+
+      {/* Takroriy logolar uzluksiz animatsiya uchun */}
+      <div className="brands-group" aria-hidden="true">
+        <div className="brand-logo kotn">KOTN</div>
+        <div className="brand-logo parachute">PARACHUTE</div>
+        <div className="brand-logo alo">alo</div>
+        <div className="brand-logo glossier">Glossier.</div>
+        <div className="brand-logo gorjana">◉ gorjana</div>
+        <div className="brand-logo brand-nike">NIKE</div>
+        <div className="brand-logo brand-adidas">adidas</div>
+        <div className="brand-logo brand-puma">PUMA</div>
+        <div className="brand-logo brand-zara">ZARA</div>
+        <div className="brand-logo brand-hm">H&M</div>
+        <div className="brand-logo brand-apple">Apple</div>
+        <div className="brand-logo brand-samsung">SAMSUNG</div>
+        <div className="brand-logo brand-sony">SONY</div>
+        <div className="brand-logo brand-google">Google</div>
+        <div className="brand-logo brand-amazon">amazon</div>
+        <div className="brand-logo brand-ikea">IKEA</div>
+        <div className="brand-logo brand-reebok">Reebok</div>
+        <div className="brand-logo brand-levi">Levi's</div>
+        <div className="brand-logo brand-dior">DIOR</div>
+        <div className="brand-logo brand-prada">PRADA</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 
         <section className="support-section" id="business">
           <h2>Оборудование для бизнеса любого размера</h2>
@@ -337,108 +387,44 @@ function App() {
           </div>
         </section>
 
-        {/* КАТАЛОГ ОБОРУДОВАНИЯ */}
-        <section className="catalog-section" id="catalog">
-          <div className="catalog-container">
-            <div className="catalog-heading">
-              <div>
-                <span className="eyebrow">МАГАЗИН ОБОРУДОВАНИЯ</span>
-                <h2>Каталог товаров</h2>
-                <p>Выбирайте оборудование для кассы, магазина, склада и компьютера.</p>
-              </div>
-              <button className="catalog-cart-button" onClick={() => setCartOpen(true)}>
-                🛒 Корзина <span>{cartCount}</span>
-              </button>
-            </div>
-
-            <div className="catalog-tools">
-              <label className="catalog-search">
-                <span>⌕</span>
-                <input
-                  type="search"
-                  value={search}
-                  onChange={(event) => setSearch(event.target.value)}
-                  placeholder="Поиск: сканер, принтер, SSD..."
-                  aria-label="Поиск товаров"
-                />
-                {search && (
-                  <button onClick={() => setSearch("")} aria-label="Очистить поиск">×</button>
-                )}
-              </label>
-
-              <select value={sort} onChange={(event) => setSort(event.target.value)} aria-label="Сортировка товаров">
-                <option value="default">Сначала рекомендуемые</option>
-                <option value="low">Сначала дешевле</option>
-                <option value="high">Сначала дороже</option>
-                <option value="name">По названию</option>
-              </select>
-            </div>
-
-            <div className="category-list">
-              {categories.map((item) => (
-                <button
-                  key={item}
-                  className={`category-chip ${category === item ? "selected" : ""}`}
-                  onClick={() => setCategory(item)}
-                >
-                  {item}
-                </button>
-              ))}
-            </div>
-
-            <div className="catalog-result-count">
-              Найдено товаров: <strong>{filteredProducts.length}</strong>
-            </div>
-
-            {filteredProducts.length > 0 ? (
-              <div className="products-grid">
-                {filteredProducts.map((product) => (
-                  <article
-                    className="product-card"
-                    key={product.id}
-                    onClick={() => openProductDetails(product)}
-                    onKeyDown={(event) => {
-                      if (event.key === "Enter") openProductDetails(product);
-                    }}
-                    tabIndex={0}
-                    role="button"
-                    aria-label={`${product.name} — подробности`}
-                  >
-                    <div className="product-visual">
-                      {product.tag && <span className="product-tag">{product.tag}</span>}
-                      <span className="product-emoji" aria-hidden="true">{product.icon}</span>
-                      <span className="product-category">{product.category}</span>
-                    </div>
-                    <div className="product-info">
-                      <h3>{product.name}</h3>
-                      <p>{product.description}</p>
-                      <div className="product-bottom">
-                        <strong className="product-price">{money(product.price)}</strong>
-                        <button
-                          className="add-cart-button"
-                          onClick={(event) => { event.stopPropagation(); addToCart(product); }}
-                          aria-label={`Добавить ${product.name} в корзину`}
-                        >
-                          + В корзину
-                        </button>
-                      </div>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            ) : (
-              <div className="catalog-empty">
-                <span>🔎</span>
-                <h3>Ничего не найдено</h3>
-                <p>Попробуйте изменить поисковый запрос или категорию.</p>
-                <button
-                  className="outline-pill"
-                  onClick={() => { setSearch(""); setCategory("Все товары"); }}
-                >
-                  Показать все товары
-                </button>
-              </div>
-            )}
+        <section className="industry-showcase" id="industry-showcase">
+          <div className="industry-showcase-heading">
+            <span className="industry-kicker">ОБОРУДОВАНИЕ ДЛЯ РАЗНЫХ СФЕР</span>
+            <h2>Решения для вашего типа бизнеса</h2>
+            <p>От небольшого магазина до крупного склада — подберите оборудование под ежедневные задачи.</p>
+          </div>
+          <div className="industry-grid">
+            {[
+              { title: "Цветочные и садовые магазины", image: "photo-1416879595882-3373a0480b5b", detail: "Для товаров и сезонных продаж" },
+              { title: "Небольшие магазины", image: "photo-1441986300917-64674bd600d8", detail: "Касса, сканер и печать чеков" },
+              { title: "Аптеки", image: "photo-1576602976047-174e57a47881", detail: "Быстрое обслуживание покупателей" },
+              { title: "Продуктовые магазины", image: "photo-1542838132-92c53300491e", detail: "Весы и учёт товаров" },
+              { title: "Кафе и рестораны", image: "photo-1517248135467-4c7edcad34c4", detail: "Заказы и расчёты за столом" },
+              { title: "Строительные магазины", image: "photo-1530124566582-a618bc2615dc", detail: "Продажи инструмента и материалов" },
+              { title: "Склады", image: "photo-1586528116311-ad8dd3c8310d", detail: "Сканирование и инвентаризация" },
+              { title: "Одежда и обувь", image: "photo-1483985988355-763728e1935b", detail: "Размеры, остатки и продажи" },
+              { title: "Мебельные магазины", image: "photo-1555041469-a586c61ea9bc", detail: "Учёт моделей и заказов" },
+              { title: "Туристические места", image: "photo-1517248135467-4c7edcad34c4", detail: "Удобная касса для посетителей" },
+              { title: "Универсальные магазины", image: "photo-1519567241046-7f570eee3ce6", detail: "Оборудование для разных товаров" },
+              { title: "Компьютерные магазины", image: "photo-1519389950473-47ba0277781c", detail: "Продажи техники и комплектующих" },
+              { title: "Магазины у дома", image: "photo-1556740758-90de374c12ad", detail: "Компактная кассовая зона" },
+              { title: "Оптовая торговля", image: "photo-1566576721346-d4a3b4eaeb55", detail: "Работа с партиями и накладными" },
+              { title: "Винные и специализированные магазины", image: "photo-1510812431401-41d2bd2722f3", detail: "Точная работа с ассортиментом" },
+            ].map((industry, index) => (
+              <a
+                className="industry-tile"
+                href={`/oyna?industry=${encodeURIComponent(industry.title)}`}
+                key={industry.title}
+                style={{ "--industry-image": `url(https://images.unsplash.com/${industry.image}?auto=format&fit=crop&w=700&q=85)` }}
+              >
+                <span className="industry-tile-number">{String(index + 1).padStart(2, "0")}</span>
+                <div className="industry-tile-copy">
+                  <h3>{industry.title}</h3>
+                  <p>{industry.detail}</p>
+                  <span className="industry-tile-arrow">↗</span>
+                </div>
+              </a>
+            ))}
           </div>
         </section>
 
@@ -472,7 +458,7 @@ function App() {
             <div>
               <h3>Подберите оборудование для своего магазина</h3>
               <p>Сравните типы устройств и выберите подходящее решение.</p>
-              <a href="#catalog">Открыть каталог ↗</a>
+              <a href="#business">Узнать больше ↗</a>
             </div>
           </div>
           <div className="connected-dark">
@@ -522,7 +508,7 @@ function App() {
               <article><h3>Для склада</h3><p>Терминалы сбора данных, этикетки, сканеры и весы.</p></article>
               <article><h3>Для компьютеров</h3><p>Комплектующие, накопители, мониторы и периферия.</p></article>
             </div>
-            <a href="#catalog" className="outline-pill">Выбрать оборудование</a>
+            <a href="#business" className="outline-pill">Выбрать оборудование</a>
           </div>
         </section>
 
@@ -532,25 +518,21 @@ function App() {
             <span className="eyebrow">ОПЛАТА И КАССА</span>
             <h2>Оборудование для обслуживания покупателей</h2>
             <p>Выбирайте совместимые терминалы оплаты, сканеры, принтеры и кассовые аксессуары.</p>
-            <a href="#catalog" className="outline-pill">Посмотреть товары</a>
+            <a href="#business" className="outline-pill">Посмотреть товары</a>
           </div>
         </section>
 
-        <section className="features-section">
+        <section className="features-section" id="features">
           <div className="features-container">
-            <span className="eyebrow">КАТЕГОРИИ КАТАЛОГА</span>
-            <h2>Всё в одном месте</h2>
-            <p className="section-description">Выберите направление, чтобы посмотреть подходящие устройства.</p>
+            <span className="eyebrow">НАШИ ВОЗМОЖНОСТИ</span>
+            <h2>Всё для работы бизнеса</h2>
+            <p className="section-description">Решения для организации кассовой зоны, магазина и склада.</p>
             <div className="features-grid">
-              {categories.slice(1, 7).map((item) => (
-                <article className="feature-card" key={item}>
-                  <h3>{item}</h3>
-                  <p>Посмотрите доступные устройства и выберите товар для своего бизнеса.</p>
-                  <button className="text-link-button" onClick={() => { setCategory(item); document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth" }); }}>Смотреть товары ↗</button>
-                </article>
-              ))}
+              <article className="feature-card"><h3>Кассовая зона</h3><p>Организуйте удобное рабочее место для обслуживания покупателей.</p></article>
+              <article className="feature-card"><h3>Магазин и торговля</h3><p>Поддерживайте повседневные процессы розничной торговли.</p></article>
+              <article className="feature-card"><h3>Склад и учёт</h3><p>Упрощайте учёт товаров, перемещение и организацию хранения.</p></article>
+              <article className="feature-card"><h3>Компьютерная техника</h3><p>Подберите решения для рабочих мест и офисных задач.</p></article>
             </div>
-            <a href="#catalog" className="outline-pill">Открыть весь каталог</a>
           </div>
         </section>
 
@@ -564,7 +546,7 @@ function App() {
               <article><span className="step-number">3</span><h3>Добавьте в корзину</h3><p>Соберите список нужных устройств и проверьте итоговую сумму.</p></article>
             </div>
             <div className="steps-buttons">
-              <a href="#catalog" className="hero-button hero-button-black">Выбрать товары</a>
+              <a href="#business" className="hero-button hero-button-black">Выбрать товары</a>
               <a href="#contact" className="outline-pill">Связаться с нами</a>
             </div>
           </div>
@@ -576,7 +558,7 @@ function App() {
             <div>
               <h2>Оснастите свой магазин</h2>
               <p>Подберите набор устройств под бюджет, количество касс и особенности торговли.</p>
-              <a href="#catalog" className="hero-button hero-button-black">Перейти к товарам</a>
+              <a href="#business" className="hero-button hero-button-black">Перейти к товарам</a>
               <small>Цены в каталоге приведены для демонстрации. Фактическую стоимость уточняйте у продавца.</small>
             </div>
           </div>
@@ -619,124 +601,14 @@ function App() {
         <section className="final-cta" id="contact">
           <div className="final-cta-content">
             <h2>Найдите оборудование для своего бизнеса</h2>
-            <p>Соберите список нужных товаров в каталоге.</p>
+            <p>Найдите подходящее решение для своего бизнеса.</p>
             <div className="final-cta-buttons">
-              <a href="#catalog" className="hero-button hero-button-light">Открыть каталог</a>
-              <button className="hero-button hero-button-dark-outline" onClick={() => setCartOpen(true)}>Посмотреть корзину ({cartCount})</button>
+              <a href="#business" className="hero-button hero-button-light">Узнать больше</a>
             </div>
           </div>
         </section>
       </main>
 
-      {selectedProduct && (
-        <div
-          className="product-detail-overlay"
-          onMouseDown={(event) => {
-            if (event.target === event.currentTarget) setSelectedProduct(null);
-          }}
-        >
-          <section className="product-detail-modal" role="dialog" aria-modal="true" aria-label="Информация о товаре">
-            <button className="product-detail-close" onClick={() => setSelectedProduct(null)} aria-label="Закрыть">×</button>
-
-            <div className="product-detail-image-side">
-              <span className="product-detail-category">{selectedProduct.category}</span>
-              <div className="product-detail-icon">{selectedProduct.icon}</div>
-              <p>Изображение товара</p>
-            </div>
-
-            <div className="product-detail-info">
-              <span className="product-detail-kicker">ИНФОРМАЦИЯ О ТОВАРЕ</span>
-              <h2>{selectedProduct.name}</h2>
-              <div className="product-detail-rating"><span>★★★★★</span> <small>Оценки пока не добавлены</small></div>
-              <p className="product-detail-description">{selectedProduct.description}</p>
-
-              <div className="product-detail-price-box">
-                <span className="product-detail-price">{money(selectedProduct.price)}</span>
-                <span className="product-detail-price-note">Цена за 1 шт.</span>
-              </div>
-
-              <div className="product-detail-status"><span className="status-dot" /> Доступен для заказа</div>
-              <div className="product-detail-benefits">
-                <div><span>✓</span><div><strong>Выбор количества</strong><small>Укажите, сколько единиц нужно</small></div></div>
-                <div><span>✓</span><div><strong>Удобная корзина</strong><small>Общая сумма обновится автоматически</small></div></div>
-                <div><span>i</span><div><strong>Скидка</strong><small>Если действует скидка, её можно указать в данных товара</small></div></div>
-              </div>
-
-              <div className="product-detail-buy-row">
-                <div className="detail-quantity-control" aria-label="Количество товара">
-                  <button onClick={() => setDetailQuantity((q) => Math.max(1, q - 1))} aria-label="Уменьшить количество">−</button>
-                  <span>{detailQuantity}</span>
-                  <button onClick={() => setDetailQuantity((q) => q + 1)} aria-label="Увеличить количество">+</button>
-                </div>
-                <button
-                  className="product-detail-add"
-                  onClick={() => {
-                    addToCart(selectedProduct, detailQuantity);
-                    setSelectedProduct(null);
-                  }}
-                >
-                  🛒 Добавить в корзину
-                </button>
-              </div>
-              <p className="product-detail-subtotal">Сумма за выбранное количество: <strong>{money(selectedProduct.price * detailQuantity)}</strong></p>
-            </div>
-          </section>
-        </div>
-      )}
-
-      {notice && <div className="cart-notice" role="status">{notice}</div>}
-
-      {cartOpen && (
-        <div className="cart-overlay" onMouseDown={(event) => {
-          if (event.target === event.currentTarget) setCartOpen(false);
-        }}>
-          <aside className="cart-drawer" aria-label="Корзина">
-            <div className="cart-header">
-              <div>
-                <span className="eyebrow">ВАШ ЗАКАЗ</span>
-                <h2>Корзина ({cartCount})</h2>
-              </div>
-              <button className="cart-close" onClick={() => setCartOpen(false)} aria-label="Закрыть корзину">×</button>
-            </div>
-
-            {cart.length === 0 ? (
-              <div className="cart-empty">
-                <span>🛒</span>
-                <h3>Корзина пока пуста</h3>
-                <p>Добавьте товары из каталога, чтобы увидеть свой заказ.</p>
-                <button className="hero-button hero-button-black" onClick={() => { setCartOpen(false); document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth" }); }}>Перейти в каталог</button>
-              </div>
-            ) : (
-              <>
-                <div className="cart-items">
-                  {cart.map((item) => (
-                    <article className="cart-item" key={item.id}>
-                      <div className="cart-item-icon">{item.icon}</div>
-                      <div className="cart-item-main">
-                        <h3>{item.name}</h3>
-                        <p>{money(item.price)}</p>
-                        <div className="quantity-controls">
-                          <button onClick={() => changeQuantity(item.id, -1)} aria-label="Уменьшить количество">−</button>
-                          <span>{item.quantity}</span>
-                          <button onClick={() => changeQuantity(item.id, 1)} aria-label="Увеличить количество">+</button>
-                          <button className="remove-item" onClick={() => setCart((previous) => previous.filter((product) => product.id !== item.id))}>Удалить</button>
-                        </div>
-                      </div>
-                      <strong>{money(item.price * item.quantity)}</strong>
-                    </article>
-                  ))}
-                </div>
-                <div className="cart-footer">
-                  <div className="cart-total"><span>Итого</span><strong>{money(cartTotal)}</strong></div>
-                  <p>Это демонстрационная корзина. Онлайн-оплата и оформление заказа не подключены.</p>
-                  <button className="hero-button hero-button-black checkout-button" onClick={() => window.alert("Корзина подготовлена. Для оформления заказа подключите backend или платёжную систему.")}>Продолжить</button>
-                  <button className="clear-cart-button" onClick={() => setCart([])}>Очистить корзину</button>
-                </div>
-              </>
-            )}
-          </aside>
-        </div>
-      )}
     </div>
   );
 }
