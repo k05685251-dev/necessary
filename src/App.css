@@ -1,5 +1,4 @@
-
-* {
+ * {
   box-sizing: border-box;
 }
 
@@ -2866,4 +2865,451 @@ img {
   .collage-ten-card { height: 145px; }
   .collage-ten-label { font-size: 10px; padding: 8px 10px; gap: 7px; left: 7px; }
   .collage-ten-card:hover { transform: translateY(-7px) scale(1.06) rotate(0deg) !important; }
+}
+saytimga regitration joy qoship ber
+
+/* REGISTRATION FORM */
+.nav-register-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 20px;
+  border: 1px solid #c9dc8c;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #eaffad 0%, #d8ff5e 100%);
+  color: #17200d;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: .1px;
+  white-space: nowrap;
+  box-shadow: 0 5px 15px rgba(125, 157, 48, .16), inset 0 1px 0 rgba(255,255,255,.75);
+  transition: background .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+.nav-register-button span {
+  display: inline-grid;
+  place-items: center;
+  width: 21px;
+  height: 21px;
+  border-radius: 7px;
+  background: rgba(23,32,13,.1);
+  font-size: 14px;
+  transition: transform .2s ease, background .2s ease;
+}
+.nav-register-button:hover {
+  background: linear-gradient(135deg, #f0ffc7 0%, #d8ff5e 100%);
+  box-shadow: 0 8px 20px rgba(125, 157, 48, .24);
+  transform: translateY(-2px);
+}
+.nav-register-button:hover span {
+  transform: translate(2px, -2px);
+  background: rgba(23,32,13,.16);
+}
+
+.registration-section {
+  position: relative;
+  padding: 105px 5%;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 12% 20%, rgba(216,255,94,.18), transparent 28%),
+    #f2f3ed;
+}
+.registration-wrap {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 480px);
+  align-items: center;
+  gap: clamp(40px, 8vw, 110px);
+}
+.registration-copy .eyebrow {
+  display: inline-block;
+  margin-bottom: 20px;
+  color: #68715b;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+.registration-copy h2 {
+  max-width: 590px;
+  margin: 0 0 22px;
+  color: #111;
+  font-size: clamp(36px, 5vw, 62px);
+  font-weight: 500;
+  line-height: 1.04;
+  letter-spacing: -2.5px;
+}
+.registration-copy > p {
+  max-width: 510px;
+  margin: 0;
+  color: #666b60;
+  font-size: 16px;
+  line-height: 1.8;
+}
+.registration-note {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 440px;
+  margin-top: 35px;
+  color: #343a2e;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.registration-note-icon {
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #d8ff5e;
+  color: #111;
+  font-size: 17px;
+}
+.registration-form {
+  padding: 34px;
+  border: 1px solid rgba(20,25,15,.08);
+  border-radius: 22px;
+  background: rgba(255,255,255,.88);
+  box-shadow: 0 24px 70px rgba(20,25,15,.09);
+  backdrop-filter: blur(14px);
+}
+.registration-form-heading {
+  margin-bottom: 25px;
+}
+.registration-form-heading > span {
+  color: #7c826f;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+}
+.registration-form-heading h3 {
+  margin: 9px 0 0;
+  color: #111;
+  font-size: 29px;
+  font-weight: 500;
+  letter-spacing: -1px;
+}
+.registration-form label {
+  display: block;
+  margin: 17px 0 8px;
+  color: #33382e;
+  font-size: 12px;
+  font-weight: 700;
+}
+.registration-form input,
+.registration-form select {
+  width: 100%;
+  min-height: 49px;
+  padding: 0 14px;
+  border: 1px solid #e1e4dc;
+  border-radius: 10px;
+  outline: none;
+  background: #fafbf8;
+  color: #171a14;
+  font-size: 14px;
+  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+}
+.registration-form input:focus,
+.registration-form select:focus {
+  border-color: #9dbd45;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(216,255,94,.22);
+}
+.registration-form input::placeholder {
+  color: #a0a49a;
+}
+.registration-submit {
+  width: 100%;
+  min-height: 52px;
+  margin-top: 24px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 0;
+  border-radius: 30px;
+  background: #111;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  transition: background .2s ease, transform .2s ease;
+}
+.registration-submit:hover {
+  background: #39432c;
+  transform: translateY(-2px);
+}
+.registration-submit span {
+  font-size: 21px;
+}
+.registration-form > small {
+  display: block;
+  margin-top: 15px;
+  color: #92968d;
+  font-size: 10px;
+  line-height: 1.6;
+}
+.registration-success {
+  margin: 14px 0 0;
+  padding: 12px 14px;
+  border: 1px solid #cfe4a0;
+  border-radius: 10px;
+  background: #f3f9e7;
+  color: #435b20;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .registration-wrap {
+    grid-template-columns: 1fr;
+    gap: 38px;
+  }
+  .registration-copy h2 {
+    max-width: 700px;
+  }
+  .registration-form {
+    width: min(600px, 100%);
+  }
+}
+@media (max-width: 600px) {
+  .registration-section {
+    padding: 70px 5%;
+  }
+  .registration-copy h2 {
+    font-size: 39px;
+    letter-spacing: -1.6px;
+  }
+  .registration-copy > p {
+    font-size: 14px;
+  }
+  .registration-form {
+    padding: 24px 19px;
+    border-radius: 17px;
+  }
+  .registration-form-heading h3 {
+    font-size: 25px;
+  }
+  .nav-register-button {
+    padding: 10px 12px;
+    font-size: 11px;
+  }
+}
+
+
+/* Profil avatari va ochiladigan profil oynasi */
+.profile-area {
+  position: relative;
+  display: flex;
+  align-items: center;
+  z-index: 1005;
+}
+.profile-avatar {
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(17, 17, 17, .12);
+  border-radius: 50%;
+  background: #d8ff5e;
+  color: #151710;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.profile-avatar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 18px rgba(0, 0, 0, .13);
+}
+.profile-dropdown {
+  position: absolute;
+  top: calc(100% + 14px);
+  right: 0;
+  width: min(330px, calc(100vw - 30px));
+  padding: 20px;
+  border: 1px solid rgba(20, 25, 15, .1);
+  border-radius: 18px;
+  background: rgba(255, 255, 250, .97);
+  box-shadow: 0 18px 55px rgba(0, 0, 0, .17);
+  color: #171a14;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  animation: profileDropIn .18s ease-out;
+}
+@keyframes profileDropIn {
+  from { opacity: 0; transform: translateY(-7px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.profile-dropdown-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 17px;
+  margin-bottom: 5px;
+  border-bottom: 1px solid #eceee7;
+}
+.profile-avatar-large {
+  width: 48px;
+  height: 48px;
+  flex-basis: 48px;
+  font-size: 18px;
+  cursor: default;
+}
+.profile-dropdown-top strong,
+.profile-dropdown-top span {
+  display: block;
+}
+.profile-dropdown-top strong {
+  font-size: 15px;
+  font-weight: 750;
+}
+.profile-dropdown-top span {
+  margin-top: 4px;
+  color: #858a7e;
+  font-size: 11px;
+}
+.profile-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 12px 0;
+  border-bottom: 1px solid #eff0eb;
+}
+.profile-detail span {
+  color: #858a7e;
+  font-size: 11px;
+}
+.profile-detail strong {
+  overflow-wrap: anywhere;
+  color: #22251e;
+  font-size: 13px;
+  font-weight: 650;
+}
+.profile-close {
+  width: 100%;
+  min-height: 40px;
+  margin-top: 15px;
+  border: 0;
+  border-radius: 22px;
+  background: #171a14;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.profile-close:hover {
+  background: #39432c;
+}
+@media (max-width: 600px) {
+  .profile-avatar {
+    width: 36px;
+    height: 36px;
+    flex-basis: 36px;
+  }
+  .profile-dropdown {
+    right: -8px;
+  }
+}
+
+
+/* Akkauntdan chiqish tugmasi */
+.profile-logout {
+  width: 100%;
+  min-height: 42px;
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid #f0caca;
+  border-radius: 22px;
+  background: #fff3f3;
+  color: #c62828;
+  font-size: 12px;
+  font-weight: 750;
+  cursor: pointer;
+  transition: background .2s ease, transform .2s ease;
+}
+.profile-logout:hover {
+  background: #ffe4e4;
+  transform: translateY(-1px);
+}
+.profile-logout span {
+  font-size: 17px;
+  line-height: 1;
+}
+
+
+/* Profil oynasida akkauntdan chiqish — Закрыть tugmasining ustida */
+.profile-dropdown .profile-logout {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative;
+  width: 100%;
+  min-height: 42px;
+  margin: 15px 0 0;
+  padding: 0 14px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid #f0caca;
+  border-radius: 22px;
+  background: #fff0f0;
+  color: #c62828;
+  font-size: 12px;
+  font-weight: 750;
+  cursor: pointer;
+}
+.profile-dropdown .profile-logout:hover {
+  background: #ffe1e1;
+}
+
+
+/* Регистрация: отдельная кнопка рядом с «Начать» */
+.nav-actions > .nav-register-button {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1px solid #171717;
+  border-radius: 28px;
+  background: #e8e8e8;
+  color: #171717;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: none;
+  transition: background .2s ease, color .2s ease, transform .2s ease;
+}
+.nav-actions > .nav-register-button span {
+  display: inline-grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  background: rgba(0,0,0,.08);
+  font-size: 13px;
+}
+.nav-actions > .nav-register-button:hover {
+  background: #d8ff5e;
+  color: #111;
+  transform: translateY(-1px);
+}
+@media (max-width: 700px) {
+  .nav-actions > .nav-register-button {
+    min-height: 40px;
+    padding: 0 11px;
+    font-size: 11px;
+  }
 }

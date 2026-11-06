@@ -1,5 +1,5 @@
-
 import React, { useEffect, useMemo, useState } from "react";
+
 import "./App.css";
 import Katalog from "./Katalog";
 import Oyna from "./Oyna";
@@ -165,10 +165,8 @@ const money = (value) =>
   new Intl.NumberFormat("ru-RU").format(value) + " сум";
 
 function App() {
-  const currentPath = window.location.pathname.toLowerCase();
-  const currentPage = new URLSearchParams(window.location.search).get("page");
-  if (currentPath === "/katalog" || currentPage === "katalog") return <Katalog />;
-  if (currentPath === "/oyna" || currentPage === "oyna") return <Oyna />;
+  if (window.location.pathname.toLowerCase() === "/katalog") return <Katalog />;
+  if (window.location.pathname.toLowerCase() === "/oyna") return <Oyna />;
   const [openFaq, setOpenFaq] = useState(null);
   const [activeSlide, setActiveSlide] = useState(0);
   const [equipmentSlide, setEquipmentSlide] = useState(0);
@@ -181,6 +179,15 @@ function App() {
   const [detailQuantity, setDetailQuantity] = useState(1);
   const [notice, setNotice] = useState("");
   const [showStickyNav, setShowStickyNav] = useState(false);
+  const [registrationSent, setRegistrationSent] = useState(false);
+  const [userProfile, setUserProfile] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("sshopifyUserProfile") || "null");
+    } catch {
+      return null;
+    }
+  });
+  const [profileOpen, setProfileOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setShowStickyNav(window.scrollY > 140);
@@ -294,8 +301,71 @@ function App() {
         </nav>
 
         <div className="nav-actions">
-          <a href="/?page=katalog" className="nav-catalog-button">Каталог</a>
+          <a href="/katalog" className="nav-catalog-button">Каталог</a>
           <a href="#start" className="nav-button">Начать</a>
+          {!userProfile && (
+            <a href="#registration" className="nav-register-button">
+              Регистрация <span aria-hidden="true">↗</span>
+            </a>
+          )}
+          {userProfile && (
+            <div className="profile-area">
+              <button
+                type="button"
+                className="profile-avatar"
+                aria-label="Открыть профиль"
+                aria-expanded={profileOpen}
+                onClick={() => setProfileOpen((open) => !open)}
+              >
+                {(userProfile.name || "U").trim().charAt(0).toUpperCase()}
+              </button>
+              {profileOpen && (
+                <div className="profile-dropdown">
+                  <div className="profile-dropdown-top">
+                    <div className="profile-avatar profile-avatar-large">
+                      {(userProfile.name || "U").trim().charAt(0).toUpperCase()}
+                    </div>
+                    <div>
+                      <strong>{userProfile.name}</strong>
+                      <span>Ваш профиль</span>
+                    </div>
+                  </div>
+                  <div className="profile-detail">
+                    <span>Телефон</span>
+                    <strong>{userProfile.phone}</strong>
+                  </div>
+                  <div className="profile-detail">
+                    <span>Электронная почта</span>
+                    <strong>{userProfile.email}</strong>
+                  </div>
+                  <div className="profile-detail">
+                    <span>Тип бизнеса</span>
+                    <strong>{userProfile.business}</strong>
+                  </div>
+                  <button
+                    type="button"
+                    className="profile-logout"
+                    onClick={() => {
+                      // Saqlangan profil ma'lumotlarini o'chiramiz
+                      localStorage.removeItem("sshopifyUserProfile");
+                      setUserProfile(null);
+                      setProfileOpen(false);
+                      setRegistrationSent(false);
+                    }}
+                  >
+                    <span aria-hidden="true">↪</span> Выйти из аккаунта
+                  </button>
+                  <button
+                    type="button"
+                    className="profile-close"
+                    onClick={() => setProfileOpen(false)}
+                  >
+                    Закрыть
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </header>
 
@@ -316,7 +386,7 @@ function App() {
             <a href="#features">Возможности</a>
             <a href="#resources">Полезные материалы</a>
           </nav>
-          <a href="/?page=katalog" className="sticky-catalog-button">Каталог</a>
+          <a href="/katalog" className="sticky-catalog-button">Каталог</a>
         </div>
       )}
 
@@ -461,7 +531,7 @@ function App() {
             ].map((industry, index) => (
               <a
                 className="industry-tile"
-                href={`/?page=oyna&industry=${encodeURIComponent(industry.title)}`}
+                href={`/oyna?industry=${encodeURIComponent(industry.title)}`}
                 key={industry.title}
                 style={{ "--industry-image": `url(https://images.unsplash.com/${industry.image}?auto=format&fit=crop&w=700&q=85)` }}
               >
@@ -707,15 +777,114 @@ function App() {
           </div>
         </section>
 
+
+        <section className="registration-section" id="registration">
+          <div className="registration-wrap">
+            <div className="registration-copy">
+              <span className="eyebrow">ДАВАЙТЕ НАЧНЁМ</span>
+              <h2>Оставьте заявку — поможем подобрать оборудование</h2>
+              <p>
+                Заполните форму, и наша команда сможет связаться с вами,
+                уточнить задачи и предложить подходящее решение для бизнеса.
+              </p>
+              <div className="registration-note">
+                <span className="registration-note-icon">✦</span>
+                <span>Ответим на вопросы и поможем с выбором оборудования.</span>
+              </div>
+            </div>
+
+            <form
+              className="registration-form"
+              onSubmit={(event) => {
+                event.preventDefault();
+                const formData = new FormData(event.currentTarget);
+                const profile = {
+                  name: formData.get("name")?.toString().trim() || "",
+                  phone: formData.get("phone")?.toString().trim() || "",
+                  email: formData.get("email")?.toString().trim() || "",
+                  business: formData.get("business")?.toString() || "",
+                };
+                localStorage.setItem("sshopifyUserProfile", JSON.stringify(profile));
+                setUserProfile(profile);
+                setProfileOpen(false);
+                setRegistrationSent(true);
+                event.currentTarget.reset();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+            >
+              <div className="registration-form-heading">
+                <span>ФОРМА РЕГИСТРАЦИИ</span>
+                <h3>Создать заявку</h3>
+              </div>
+
+              <label htmlFor="registration-name">Ваше имя</label>
+              <input
+                id="registration-name"
+                name="name"
+                type="text"
+                placeholder="Например, Алексей"
+                autoComplete="name"
+                required
+              />
+
+              <label htmlFor="registration-phone">Номер телефона</label>
+              <input
+                id="registration-phone"
+                name="phone"
+                type="tel"
+                placeholder="+998 90 123 45 67"
+                autoComplete="tel"
+                required
+              />
+
+              <label htmlFor="registration-email">Электронная почта</label>
+              <input
+                id="registration-email"
+                name="email"
+                type="email"
+                placeholder="name@example.com"
+                autoComplete="email"
+                required
+              />
+
+              <label htmlFor="registration-business">Тип бизнеса</label>
+              <select id="registration-business" name="business" defaultValue="" required>
+                <option value="" disabled>Выберите сферу бизнеса</option>
+                <option value="Розничный магазин">Розничный магазин</option>
+                <option value="Кафе или ресторан">Кафе или ресторан</option>
+                <option value="Склад и логистика">Склад и логистика</option>
+                <option value="Аптека">Аптека</option>
+                <option value="Другое">Другое</option>
+              </select>
+
+              <button className="registration-submit" type="submit">
+                Отправить заявку <span>→</span>
+              </button>
+
+              {registrationSent && (
+                <p className="registration-success" role="status">
+                  Спасибо! Форма заполнена. Для реальной отправки заявки нужно подключить сервер или сервис форм.
+                </p>
+              )}
+
+              <small>
+                Нажимая кнопку, вы соглашаетесь на обработку указанных контактных данных.
+              </small>
+            </form>
+          </div>
+        </section>
+
         <section className="final-cta" id="contact">
           <div className="final-cta-content">
             <h2>Найдите оборудование для своего бизнеса</h2>
             <p>Найдите подходящее решение для своего бизнеса.</p>
             <div className="final-cta-buttons">
-              <a href="#business" className="hero-button hero-button-light">Узнать больше</a>
+              <a href="tel:+998917922020" className="hero-button hero-button-light">+998 91 792 20 20</a>
+              <a href="https://t.me/smartsoftsolution" target="_blank" rel="noopener noreferrer" className="hero-button hero-button-light">@smartsoftsolution</a>
             </div>
           </div>
         </section>
+
       </main>
 
     </div>
@@ -723,4 +892,3 @@ function App() {
 }
 
 export default App;
-
